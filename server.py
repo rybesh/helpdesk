@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, redirect
+from flask import Flask, render_template, render_template_string, make_response, redirect
 from flask.ext.restful import Api, Resource, reqparse, abort
 
 import json
@@ -102,6 +102,21 @@ query_parser.add_argument(
 query_parser.add_argument(
     'sort_by', type=str, choices=('priority', 'time'), default='time')
 
+greeting_parser = reqparse.RequestParser()
+greeting_parser.add_argument(
+    'name', type=str, default='unknown')
+
+class Greeting(Resource):
+  def get(self, role):
+      query = greeting_parser.parse_args()
+      response = make_response(
+         render_template(
+          'name.html',
+          role = role,
+          name = query['name']), 200)
+      response.headers['Content-Type'] = "text/html"
+      return response
+
 
 # Define our help request resource.
 class HelpRequest(Resource):
@@ -147,9 +162,11 @@ class HelpRequestList(Resource):
     # applying any filtering and sorting parameters.
     def get(self):
         query = query_parser.parse_args()
-        return make_response(
+        response = make_response(
             render_helprequest_list_as_html(
                 filter_and_sort_helprequests(**query)), 200)
+        response.headers['Content-Type'] = "text/html"
+        return response
 
     # Add a new help request to the list, and respond with an HTML
     # representation of the updated list.
@@ -178,7 +195,9 @@ api = Api(app)
 api.add_resource(HelpRequestList, '/requests')
 api.add_resource(HelpRequestListAsJSON, '/requests.json')
 api.add_resource(HelpRequest, '/request/<string:helprequest_id>')
-api.add_resource(HelpRequestAsJSON, '/request/<string:helprequest_id>.json')
+api.add_resource(Greeting, '/greeting/<string:role>')
+
+
 
 
 # Redirect from the index to the list of help requests.
