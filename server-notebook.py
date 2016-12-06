@@ -40,10 +40,9 @@ for arg in ['author', 'title', 'description']:
 class MasterRequest(Resource):
 
     def get(self, notebook_id):
-        query = query_parser.parse_args()
         response = make_response(
-        render_master_list_as_html(
-            filter_and_sort_notebooks(**query)), 200)
+        render_notebook_as_html(
+            data['notebooks'][notebook_id]), 200)
         response.headers['Content-Type'] = "text/html"
         return response
 
@@ -73,6 +72,11 @@ class MasterNotebookList(Resource):
         return make_response(
             render_master_list_as_html(
                 filter_and_sort_notebooks()), 201)
+
+
+def render_notebook_as_html(notebook):
+    return render_template('notebook+microdata+rdfa.html', 
+                            notebook=notebook)
 
 
 # Given the data for a list of help requests, generate an HTML representation
