@@ -1,0 +1,25 @@
+{ "@context":
+  { "notebook": "https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#",
+    "notebooks":
+    { "@id": "http://www.w3.org/2000/01/rdf-schema#member",
+      "@container": "@index"
+    },
+    "title": "http://schema.org/name",
+    "description": "http://schema.org/description",
+    "from": "http://schema.org/creator",
+    "time": "http://schema.org/dateCreated",
+    "comments": "http://schema.org/comment"
+  },
+  "@id": "notebooks",
+  "notebooks":
+  { "fhs6jo" :
+    { "@type": "notebook:notebook",
+      "@id": "notebook/nb1",
+      "title" : "Notebook title",
+      "description" : "This is the first notebook",
+      "from" : "gary@unc.edu",
+      "time" : "2014-10-13T12:00:4"
+
+    }
+  }
+}
