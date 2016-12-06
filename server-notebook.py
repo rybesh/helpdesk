@@ -12,6 +12,7 @@ query_parser = reqparse.RequestParser()
 # Define our help request resource.
 class MasterRequest(Resource):
     def get(self):
+        query = query_parser.parse_args()
         response = make_response(
             render_master_list_as_html(
                 filter_and_sort_notebooks(**query)), 200)
@@ -60,7 +61,10 @@ with open('notebook.jsonld') as data:
 # Assign URL paths to our resources.
 app = Flask(__name__)
 api = Api(app)
-api.add_resource(MasterRequest, '/master')
+api.add_resource(MasterRequest, '/notebook')
+#api.add_resource(MListAsJSON, '/requests.json')
+api.add_resource(MasterRequest, '/notebook/<string:notebook_id>')
+
 
 
 # Start the server.
