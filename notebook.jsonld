@@ -17,7 +17,7 @@
       "@id": "notebook/nb1",
       "title" : "Notebook title",
       "description" : "This is the first notebook",
-      "from" : "gary@unc.edu",
+      "author" : "gary@unc.edu",
       "time" : "2014-10-13T12:00:4"
 
     }

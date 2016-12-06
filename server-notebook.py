@@ -8,11 +8,32 @@ from datetime import datetime
 
 query_parser = reqparse.RequestParser()
 
-
 # Load data from disk.
 # This simply loads the data from our "database," which is just a JSON file.
 with open('notebook.jsonld') as data:
     data = json.load(data)
+
+# Raises an error if the string x is empty (has zero length).
+def nonempty_string(x):
+    s = str(x)
+    if len(x) == 0:
+        raise ValueError('string is empty')
+    return s
+
+
+# Generate a unique ID for a new help request.
+# By default this will consist of six lowercase numbers and letters.
+def generate_id(size=6, chars=string.ascii_lowercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
+# Specify the data necessary to create a new notebook request.
+# "author", "title", and "description" are all required values.
+new_notebook_parser = reqparse.RequestParser()
+for arg in ['author', 'title', 'description']:
+    new_notebook_parser.add_argument(
+        arg, type=nonempty_string, required=True,
+        help="'{}' is a required value".format(arg))
 
 
 # Define our help request resource.
@@ -39,6 +60,19 @@ class MasterNotebookList(Resource):
                 filter_and_sort_notebooks(**query)), 200)
         response.headers['Content-Type'] = "text/html"
         return response
+
+        # Add a new help request to the list, and respond with an HTML
+    # representation of the updated list.
+    def post(self):
+        notebook = new_notebook_parser.parse_args()
+        notebook_id = generate_id()
+        notebook['@id'] = 'request/' + helprequest_id
+        notebook['@type'] = 'notebook:notebook'
+        notebook['time'] = datetime.isoformat(datetime.now())
+        data['notebooks'][notebook_id] = notebook
+        return make_response(
+            render_master_list_as_html(
+                filter_and_sort_notebooks()), 201)
 
 
 # Given the data for a list of help requests, generate an HTML representation
@@ -70,14 +104,6 @@ def filter_and_sort_notebooks(query='', sort_by='time'):
     filtered_notebooks = filter(matches_query, data['notebooks'].items())
 
     return sorted(filtered_notebooks, key=get_sort_value, reverse=True)
-
-
-# Load data from disk.
-# This simply loads the data from our "database," which is just a JSON file.
-with open('notebook.jsonld') as data:
-    data = json.load(data)
-
-
 
 # Assign URL paths to our resources.
 app = Flask(__name__)
