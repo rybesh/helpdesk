@@ -22,31 +22,17 @@
       vocab="http://schema.org/"
       prefix="notebook: https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#"
       property="notebook:notebooks"
-      typeof="notebook:HelpRequest">
+      typeof="notebook:MasterRequest">
     <div itemprop="http://www.w3.org/ns/md#item"
          itemscope itemtype="http://schema.org/CreativeWork/HelpRequest">
     <time itemprop="dateCreated"
           property="dateCreated"
-          datetime="{{ helprequest.time }}">{{ helprequest.time }}</time>
-    priority: {{ priorities[helprequest.priority] }}
-    <a href="{{ url_for('helprequest', helprequest_id=helprequest_id) }}">
-      <span itemprop="name" property="name">{{ helprequest.title }}</span>
+          datetime="{{ notebook.time }}">{{ notebook.time }}</time>
+
+    <a href="{{ url_for('masterrequest', notebook_id=notebook) }}">
+      <span itemprop="name" property="name">{{ notebook.title }}</span>
     </a>
     </div>
   </li>
   {% endfor %}
 </ol>
-
-<form class="helprequest-editor" action="{{ url_for('helprequestlist') }}" method="post">
-  <label>from
-    <input name="from" type="text">
-  </label>
-  <br>
-  <label>title
-    <input name="title" type="text">
-  </label>
-  <br>
-  <textarea name="description"></textarea>
-  <br>  
-  <input class="create" type="submit" value="create new request">
-</form>
