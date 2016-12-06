@@ -17,7 +17,7 @@
 <ol>
   {% for notebook_id, notebook in notebooks %}
   <li itemscope
-      itemid="{{ url_for('ntoebook', notebook_id=notebook_id, _external=True) }}"
+      itemid="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
       resource="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
       vocab="http://schema.org/"
       prefix="notebook: https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#"
