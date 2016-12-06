@@ -3,7 +3,7 @@
 <title>All notebooks</title>
 
 {% if request.args["sort_by"] == "time" %}
-<a href="{{ url_for('notebookslist') }}?sort_by=time">sort by time</a>
+<a href="{{ url_for('notebook') }}?sort_by=time">sort by time</a>
 {% endif %}
 
 <form class="search" method="get">
@@ -17,8 +17,8 @@
 <ol>
   {% for notebook_id, notebook in notebooks %}
   <li itemscope
-      itemid="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
-      resource="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
+      itemid="{{ url_for('masterrequest', notebook_id=notebook_id, _external=True) }}"
+      resource="{{ url_for('masterrequest', notebook_id=notebook_id, _external=True) }}"
       vocab="http://schema.org/"
       prefix="notebook: https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#"
       property="notebook:notebooks"

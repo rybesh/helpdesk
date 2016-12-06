@@ -9,6 +9,12 @@ from datetime import datetime
 query_parser = reqparse.RequestParser()
 
 
+# Load data from disk.
+# This simply loads the data from our "database," which is just a JSON file.
+with open('notebook.jsonld') as data:
+    data = json.load(data)
+
+
 # Define our help request resource.
 class MasterRequest(Resource):
 
@@ -39,6 +45,7 @@ class MasterNotebookList(Resource):
 # of that list.
 def render_master_list_as_html(notebooks):
     query = query_parser.parse_args()
+    print(notebooks)
     return render_template(
         'notebooks+microdata+rdfa.html',
         notebooks=notebooks)
