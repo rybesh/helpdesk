@@ -27,6 +27,13 @@ def generate_id(size=6, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+# Respond with 404 Not Found if no notebook with the specified ID exists.
+def error_if_notebook_not_found(notebook_id):
+    if notebook_id not in data['notebooks']:
+        message = "No notebook request with ID: {}".format(notebook_id)
+        abort(404, message=message)
+
+
 # Specify the data necessary to create a new notebook request.
 # "author", "title", and "description" are all required values.
 new_notebook_parser = reqparse.RequestParser()
@@ -45,6 +52,18 @@ class MasterRequest(Resource):
             data['notebooks'][notebook_id]), 200)
         response.headers['Content-Type'] = "text/html"
         return response
+
+
+# Define a resource for getting a JSON representation of a help request.
+class NotebookAsJSON(Resource):
+
+    # If a  request with the specified ID does not exist,
+    # respond with a 404, otherwise respond with a JSON representation.
+    def get(self, notebook_id):
+        error_if_notebook_not_found(notebook_id)
+        notebook = data['notebooks'][notebook_id]
+        notebook['@context'] = data['@context']
+        return notebook
 
 
 # Define our help request list resource.
@@ -115,6 +134,7 @@ api = Api(app)
 api.add_resource(MasterNotebookList, '/notebook')
 #api.add_resource(MListAsJSON, '/requests.json')
 api.add_resource(MasterRequest, '/notebook/<string:notebook_id>')
+api.add_resource(NotebookAsJSON, '/notebook.json/<string:notebook_id>')
 
 
 
