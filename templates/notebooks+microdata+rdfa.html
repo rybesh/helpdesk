@@ -36,3 +36,17 @@
   </li>
   {% endfor %}
 </ol>
+
+<form class="notebook-editor" action="{{ url_for('masternotebooklist') }}" method="post">
+  <label>author
+    <input name="author" type="text">
+  </label>
+  <br>
+  <label>title
+    <input name="title" type="text">
+  </label>
+  <br>
+  <textarea name="description"></textarea>
+  <br>
+  <input class="create" type="submit" value="create new request">
+</form>

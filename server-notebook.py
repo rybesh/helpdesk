@@ -65,7 +65,7 @@ class MasterNotebookList(Resource):
     def post(self):
         notebook = new_notebook_parser.parse_args()
         notebook_id = generate_id()
-        notebook['@id'] = 'request/' + helprequest_id
+        notebook['@id'] = 'request/' + notebook_id
         notebook['@type'] = 'notebook:notebook'
         notebook['time'] = datetime.isoformat(datetime.now())
         data['notebooks'][notebook_id] = notebook
