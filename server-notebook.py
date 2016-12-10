@@ -43,8 +43,8 @@ for arg in ['author', 'title', 'description']:
         help="'{}' is a required value".format(arg))
 
 
-# Define our help request resource.
-class MasterRequest(Resource):
+# Define our notebook resource.
+class Notebook(Resource):
 
     def get(self, notebook_id):
         response = make_response(
@@ -133,7 +133,7 @@ app = Flask(__name__)
 api = Api(app)
 api.add_resource(MasterNotebookList, '/notebook')
 #api.add_resource(MListAsJSON, '/requests.json')
-api.add_resource(MasterRequest, '/notebook/<string:notebook_id>')
+api.add_resource(Notebook, '/notebook/<string:notebook_id>')
 api.add_resource(NotebookAsJSON, '/notebook.json/<string:notebook_id>')
 
 
