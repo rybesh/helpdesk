@@ -43,6 +43,17 @@ for arg in ['author', 'title', 'description']:
         help="'{}' is a required value".format(arg))
 
 
+# Specify the data necessary to update an existing help request.
+# Only the priority and comments can be updated.
+update_notebook_parser = reqparse.RequestParser()
+update_notebook_parser.add_argument(
+    'author', type=str, default='')
+update_notebook_parser.add_argument(
+    'title', type=str, default='')
+update_notebook_parser.add_argument(
+    'description', type=str, default='')
+
+
 # Define our notebook resource.
 class Notebook(Resource):
 
@@ -52,6 +63,19 @@ class Notebook(Resource):
             data['notebooks'][notebook_id]), 200)
         response.headers['Content-Type'] = "text/html"
         return response
+
+    # If a notebook request with the specified ID does not exist,
+    # respond with a 404, otherwise update the notebook and respond
+    # with the updated HTML representation.
+    def put(self, notebook_id):
+        error_if_notebook_not_found(notebook_id)
+        notebook = data['notebooks'][notebook_id]
+        update = update_notebook_parser.parse_args()
+        notebook['author'] = update['author']
+        notebook['title'] = update['title']
+        notebook['description'] = update['description']
+        return make_response(
+            render_notebook_as_html(notebook), 200)
 
 
 # Define a resource for getting a JSON representation of a help request.
@@ -134,7 +158,7 @@ api = Api(app)
 api.add_resource(MasterNotebookList, '/notebook')
 #api.add_resource(MListAsJSON, '/requests.json')
 api.add_resource(Notebook, '/notebook/<string:notebook_id>')
-api.add_resource(NotebookAsJSON, '/notebook.json/<string:notebook_id>')
+api.add_resource(NotebookAsJSON, '/notebook/<string:notebook_id>.json')
 
 
 

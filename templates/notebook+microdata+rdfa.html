@@ -20,23 +20,7 @@ view data as JSON-LD</a>
       datetime="{{ notebook.time }}">{{ notebook.time }}</time>
 
 <form class="notebook-editor" method="put">
-  <script>
-      var form = document.querySelector('notebook-editor');
-      var button = document.querySelector('form.notebook-editor input.update');
 
-      button.addEventListener('click', function (event) {
-          event.preventDefault();
-          var request = new XMLHttpRequest();
-          request.open('PUT', window.location.pathname);
-          request.onreadystatechange = function () {
-              if (XMLHttpRequest.DONE === request.readyState
-                  && 200 === request.status) {
-                  window.location.reload(true);
-              }
-          }
-          request.send(new FormData(form));
-      }, false);
-  </script>
   <label>author
     <input name="author" type="text" value="{{notebook.author}}">
   </label>
@@ -47,7 +31,24 @@ view data as JSON-LD</a>
   <br>
   <textarea name="description">{{notebook.description}}</textarea>
   <br>
-  <input class="update" type="submit" value="update notebook">
+  <button class="update" id="update-notebook-button" type="submit">Update</button>
 </form>
+<script>
+    var form = document.querySelector('.notebook-editor');
+    var button = document.querySelector('#update-notebook-button');
 
+    button.addEventListener('click', function (event) {
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        alert("doing put");
+        request.open('PUT', window.location.pathname);
+        request.onreadystatechange = function () {
+            if (XMLHttpRequest.DONE === request.readyState
+                && 200 === request.status) {
+                window.location.reload(true);
+            }
+        }
+        request.send(new FormData(form));
+    }, false);
+</script>
 </body>
