@@ -4,10 +4,6 @@
 
 <body>
 
-<a href="http://www.w3.org/2012/pyRdfa/extract?uri=referer">
-view data extracted from RDFa markup</a><br>
-<a href="http://getschema.org/microdataextractor?url={{ request.url }}&out=json">
-view data extracted from microdata markup</a><br>  
 <a href="{{ request.path }}.json">
 view data as JSON-LD</a>
 
@@ -16,42 +12,49 @@ view data as JSON-LD</a>
 <p class="description" itemprop="description" property="description">{{ notebook.description }}</p>
 
 <p class="from" itemprop="creator" itemscope itemtype="http://schema.org/Person"
-   property="creator" typeof="Person">>
+   property="creator" typeof="Person">
   <span itemprop="email" property="email">{{ notebook.from }}</span>
 </p>
 
 <time itemprop="dateCreated" property="dateCreated"
       datetime="{{ notebook.time }}">{{ notebook.time }}</time>
 
-<form class="help-request-editor" method="patch">
-  <label>priority
+<form class="notebook-editor" method="put">
 
+  <label>author
+    <input name="author" type="text" value="{{notebook.author}}">
   </label>
   <br>
-
-  <label>comments<br>
-
+  <label>title
+    <input name="title" type="text" value = {{notebook.title}}>
   </label>
   <br>
-  <input class="update" type="submit" value="update help request">
-  <script>
-    var form = document.querySelector('form.help-request-editor');
-    var button = document.querySelector('form.help-request-editor input.update');
+  <textarea name="description">{{notebook.description}}</textarea>
+  <br>
+  <button class="update" id="update-notebook-button" type="submit">Update</button>
+</form>
+<script>
+    var form = document.querySelector('.notebook-editor');
+    var button = document.querySelector('#update-notebook-button');
 
     button.addEventListener('click', function (event) {
-      event.preventDefault();
-      var request = new XMLHttpRequest();
-      request.open('PATCH', window.location.pathname);
-      request.onreadystatechange = function () {
-        if (XMLHttpRequest.DONE === request.readyState 
-            && 200 === request.status) {
-          window.location.reload(true);
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        alert("doing put");
+        request.open('PUT', window.location.pathname);
+        request.onreadystatechange = function () {
+            if (XMLHttpRequest.DONE === request.readyState
+                && 200 === request.status) {
+                window.location.reload(true);
+            }
         }
-      }
-      request.send(new FormData(form));
+        request.send(new FormData(form));
     }, false);
-  </script>
-</form>
+</script>
 
 <a rel="collection" href="{{ url_for('masternotebooklist') }}">all notebooks</a>
+
+
+
+
 </body>

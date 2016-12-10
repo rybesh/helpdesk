@@ -27,6 +27,13 @@ def generate_id(size=6, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
+# Respond with 404 Not Found if no notebook with the specified ID exists.
+def error_if_notebook_not_found(notebook_id):
+    if notebook_id not in data['notebooks']:
+        message = "No notebook request with ID: {}".format(notebook_id)
+        abort(404, message=message)
+
+
 # Specify the data necessary to create a new notebook request.
 # "author", "title", and "description" are all required values.
 new_notebook_parser = reqparse.RequestParser()
@@ -36,8 +43,19 @@ for arg in ['author', 'title', 'description']:
         help="'{}' is a required value".format(arg))
 
 
-# Define our help request resource.
-class MasterRequest(Resource):
+# Specify the data necessary to update an existing help request.
+# Only the priority and comments can be updated.
+update_notebook_parser = reqparse.RequestParser()
+update_notebook_parser.add_argument(
+    'author', type=str, default='')
+update_notebook_parser.add_argument(
+    'title', type=str, default='')
+update_notebook_parser.add_argument(
+    'description', type=str, default='')
+
+
+# Define our notebook resource.
+class Notebook(Resource):
 
     def get(self, notebook_id):
         response = make_response(
@@ -45,6 +63,31 @@ class MasterRequest(Resource):
             data['notebooks'][notebook_id]), 200)
         response.headers['Content-Type'] = "text/html"
         return response
+
+    # If a notebook request with the specified ID does not exist,
+    # respond with a 404, otherwise update the notebook and respond
+    # with the updated HTML representation.
+    def put(self, notebook_id):
+        error_if_notebook_not_found(notebook_id)
+        notebook = data['notebooks'][notebook_id]
+        update = update_notebook_parser.parse_args()
+        notebook['author'] = update['author']
+        notebook['title'] = update['title']
+        notebook['description'] = update['description']
+        return make_response(
+            render_notebook_as_html(notebook), 200)
+
+
+# Define a resource for getting a JSON representation of a help request.
+class NotebookAsJSON(Resource):
+
+    # If a  request with the specified ID does not exist,
+    # respond with a 404, otherwise respond with a JSON representation.
+    def get(self, notebook_id):
+        error_if_notebook_not_found(notebook_id)
+        notebook = data['notebooks'][notebook_id]
+        notebook['@context'] = data['@context']
+        return notebook
 
 
 # Define our help request list resource.
@@ -65,7 +108,7 @@ class MasterNotebookList(Resource):
     def post(self):
         notebook = new_notebook_parser.parse_args()
         notebook_id = generate_id()
-        notebook['@id'] = 'request/' + helprequest_id
+        notebook['@id'] = 'request/' + notebook_id
         notebook['@type'] = 'notebook:notebook'
         notebook['time'] = datetime.isoformat(datetime.now())
         data['notebooks'][notebook_id] = notebook
@@ -114,7 +157,8 @@ app = Flask(__name__)
 api = Api(app)
 api.add_resource(MasterNotebookList, '/notebook')
 #api.add_resource(MListAsJSON, '/requests.json')
-api.add_resource(MasterRequest, '/notebook/<string:notebook_id>')
+api.add_resource(Notebook, '/notebook/<string:notebook_id>')
+api.add_resource(NotebookAsJSON, '/notebook/<string:notebook_id>.json')
 
 
 

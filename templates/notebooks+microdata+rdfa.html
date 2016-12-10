@@ -17,22 +17,36 @@
 <ol>
   {% for notebook_id, notebook in notebooks %}
   <li itemscope
-      itemid="{{ url_for('masterrequest', notebook_id=notebook_id, _external=True) }}"
-      resource="{{ url_for('masterrequest', notebook_id=notebook_id, _external=True) }}"
+      itemid="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
+      resource="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
       vocab="http://schema.org/"
       prefix="notebook: https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#"
       property="notebook:notebooks"
-      typeof="notebook:MasterRequest">
+      typeof="notebook:Notebook">
     <div itemprop="http://www.w3.org/ns/md#item"
-         itemscope itemtype="http://schema.org/CreativeWork/HelpRequest">
+         itemscope itemtype="http://schema.org/CreativeWork/Notebook">
     <time itemprop="dateCreated"
           property="dateCreated"
           datetime="{{ notebook.time }}">{{ notebook.time }}</time>
 
-    <a href="{{ url_for('masterrequest', notebook_id=notebook_id) }}">
+    <a href="{{ url_for('notebook', notebook_id=notebook_id) }}">
       <span itemprop="name" property="name">{{ notebook.title }}</span>
     </a>
     </div>
   </li>
   {% endfor %}
 </ol>
+
+<form class="notebook-editor" action="{{ url_for('masternotebooklist') }}" method="post">
+  <label>author
+    <input name="author" type="text">
+  </label>
+  <br>
+  <label>title
+    <input name="title" type="text">
+  </label>
+  <br>
+  <textarea name="description"></textarea>
+  <br>
+  <input class="create" type="submit" value="create new notebook">
+</form>
