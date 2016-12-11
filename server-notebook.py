@@ -60,7 +60,7 @@ class Notebook(Resource):
     def get(self, notebook_id):
         response = make_response(
         render_notebook_as_html(
-            data['notebooks'][notebook_id]), 200)
+            data['notebooks'][notebook_id], notebook_id), 200)
         response.headers['Content-Type'] = "text/html"
         return response
 
@@ -117,9 +117,13 @@ class MasterNotebookList(Resource):
                 filter_and_sort_notebooks()), 201)
 
 
-def render_notebook_as_html(notebook):
+def render_notebook_as_html(notebook, notebook_id):
     return render_template('notebook+microdata+rdfa.html', 
-                            notebook=notebook)
+                            notebook=notebook, notebook_id=notebook_id)
+
+def render_reference_as_html(reference, notebook_id):
+    return render_template('reference+microdata+rdfa.html',
+                            reference=reference, notebook_id=notebook_id)
 
 
 # Given the data for a list of help requests, generate an HTML representation
@@ -152,6 +156,15 @@ def filter_and_sort_notebooks(query='', sort_by='time'):
 
     return sorted(filtered_notebooks, key=get_sort_value, reverse=True)
 
+class Reference(Resource):
+    def get(self, notebook_id, reference_id):
+        curr_notebook = data['notebooks'][notebook_id]
+        response = make_response(
+            render_reference_as_html(
+                curr_notebook['references'][reference_id], notebook_id), 200)
+        response.headers['Content-Type'] = "text/html"
+        return response
+
 # Assign URL paths to our resources.
 app = Flask(__name__)
 api = Api(app)
@@ -159,6 +172,7 @@ api.add_resource(MasterNotebookList, '/notebook')
 #api.add_resource(MListAsJSON, '/requests.json')
 api.add_resource(Notebook, '/notebook/<string:notebook_id>')
 api.add_resource(NotebookAsJSON, '/notebook/<string:notebook_id>.json')
+api.add_resource(Reference, '/notebook/<string:notebook_id>/reference/<string:reference_id>')
 
 
 

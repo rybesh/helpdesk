@@ -31,6 +31,17 @@ view data as JSON-LD</a>
   <br>
   <textarea name="description">{{notebook.description}}</textarea>
   <br>
+
+  {% for reference_id in notebook.references %}
+    <li>
+      <div>
+        <a href="{{ url_for('reference', notebook_id=notebook_id, reference_id=reference_id) }}">
+          <span itemprop="name" property="name" >{{notebook.references[reference_id].reference}}</span>
+        </a>
+      </div>
+    </li>
+  {% endfor %}
+
   <button class="update" id="update-notebook-button" type="submit">Update</button>
 </form>
 <script>

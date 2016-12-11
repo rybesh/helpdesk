@@ -14,7 +14,7 @@
   "notebooks":
   { "fhs6jo" :
     { "@type": "notebook:notebook",
-      "@id": "notebook/nb1",
+      "@id": "notebook/fhs6jo",
       "title" : "Notebook title",
       "description" : "This is the first notebook",
       "author" : "gary@unc.edu",
@@ -25,7 +25,7 @@
               "comment" : "this is a reference",
               "reference" : "Jones, A, Really Good Paper on JSON, Journal of Good Things, 1911",
               "link" : "http://cnn.com"
-             }
+            }
         }
     }
   }
