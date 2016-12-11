@@ -14,6 +14,41 @@
   <div>
      <span>Reference Source: <a rel="link" href="{{reference.link}}">{{reference.link}}</a></span>
   </div>
+
+  <form class="reference-editor" method="put">
+
+    <label>Reference Title
+      <input name="reference" type="text" value="{{reference.reference}}">
+    </label>
+    <br>
+    <label>Reference Link
+      <input name="link" type="text" value = {{reference.link}}>
+    </label>
+    <br>
+    <textarea name="comment">{{reference.comment}}</textarea>
+    <br>
+
+    <button class="update" id="update-reference-button" type="submit">Update</button>
+  </form>
+
+  <script>
+    var form = document.querySelector('.reference-editor');
+    var button = document.querySelector('#update-reference-button');
+
+    button.addEventListener('click', function (event) {
+        event.preventDefault();
+        var request = new XMLHttpRequest();
+        alert("doing put");
+        request.open('PUT', window.location.pathname);
+        request.onreadystatechange = function () {
+            if (XMLHttpRequest.DONE === request.readyState
+                && 200 === request.status) {
+                window.location.reload(true);
+            }
+        }
+        request.send(new FormData(form));
+    }, false);
+  </script>
  
   <br>
   <a rel="resource" href="{{ url_for('notebook', notebook_id=notebook_id) }}">Return to Notebook</a>
