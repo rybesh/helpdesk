@@ -33,6 +33,12 @@ def error_if_notebook_not_found(notebook_id):
         message = "No notebook request with ID: {}".format(notebook_id)
         abort(404, message=message)
 
+def error_if_reference_not_found(notebook, reference_id):
+    if reference_id not in notebook['references']:
+        message = "No reference with ID: {}".format(reference_id)
+        abort(404, message=message)
+
+
 
 # Specify the data necessary to create a new notebook request.
 # "author", "title", and "description" are all required values.
@@ -43,7 +49,7 @@ for arg in ['author', 'title', 'description']:
         help="'{}' is a required value".format(arg))
 
 
-# Specify the data necessary to update an existing help request.
+# Specify the data necessary to update an existing notebook.
 # Only the priority and comments can be updated.
 update_notebook_parser = reqparse.RequestParser()
 update_notebook_parser.add_argument(
@@ -52,6 +58,14 @@ update_notebook_parser.add_argument(
     'title', type=str, default='')
 update_notebook_parser.add_argument(
     'description', type=str, default='')
+
+update_reference_parser = reqparse.RequestParser()
+update_reference_parser.add_argument(
+    'reference', type=str, default='')
+update_reference_parser.add_argument(
+    'link', type=str, default='')
+update_reference_parser.add_argument(
+    'comment', type=str, default='')
 
 
 # Define our notebook resource.
@@ -75,7 +89,7 @@ class Notebook(Resource):
         notebook['title'] = update['title']
         notebook['description'] = update['description']
         return make_response(
-            render_notebook_as_html(notebook), 200)
+            render_notebook_as_html(notebook, notebook_id), 200)
 
 
 # Define a resource for getting a JSON representation of a help request.
@@ -89,6 +103,41 @@ class NotebookAsJSON(Resource):
         notebook['@context'] = data['@context']
         return notebook
 
+class ReferenceAsJSON(Resource):
+    def get(self, notebook_id, reference_id):
+        error_if_notebook_not_found(notebook_id)
+        curr_notebook = data['notebooks'][notebook_id]
+        error_if_reference_not_found(curr_notebook, reference_id)
+        curr_reference = curr_notebook['references'][reference_id]
+
+        return curr_reference
+
+
+class Reference(Resource):
+    def get(self, notebook_id, reference_id):
+        error_if_notebook_not_found(notebook_id)
+        curr_notebook = data['notebooks'][notebook_id]
+        error_if_reference_not_found(curr_notebook, reference_id)
+
+        curr_reference = curr_notebook['references'][reference_id]
+        response = make_response(
+            render_reference_as_html(
+                curr_reference, notebook_id), 200)
+        response.headers['Content-Type'] = "text/html"
+        return response
+
+    def put(self, notebook_id, reference_id):
+        error_if_notebook_not_found(notebook_id)
+        curr_notebook = data['notebooks'][notebook_id]
+        error_if_reference_not_found(curr_notebook, reference_id)
+
+        curr_reference = curr_notebook['references'][reference_id]
+        update = update_reference_parser.parse_args()
+        curr_reference['reference'] = update['reference']
+        curr_reference['link'] = update['link']
+        curr_reference['comment'] = update['comment']
+        return make_response(
+            render_reference_as_html(curr_reference, notebook_id), 200)
 
 # Define our help request list resource.
 class MasterNotebookList(Resource):
@@ -156,14 +205,7 @@ def filter_and_sort_notebooks(query='', sort_by='time'):
 
     return sorted(filtered_notebooks, key=get_sort_value, reverse=True)
 
-class Reference(Resource):
-    def get(self, notebook_id, reference_id):
-        curr_notebook = data['notebooks'][notebook_id]
-        response = make_response(
-            render_reference_as_html(
-                curr_notebook['references'][reference_id], notebook_id), 200)
-        response.headers['Content-Type'] = "text/html"
-        return response
+
 
 # Assign URL paths to our resources.
 app = Flask(__name__)
@@ -173,7 +215,7 @@ api.add_resource(MasterNotebookList, '/notebook')
 api.add_resource(Notebook, '/notebook/<string:notebook_id>')
 api.add_resource(NotebookAsJSON, '/notebook/<string:notebook_id>.json')
 api.add_resource(Reference, '/notebook/<string:notebook_id>/reference/<string:reference_id>')
-
+api.add_resource(ReferenceAsJSON, '/notebook/<string:notebook_id>/reference/<string:reference_id>.json')
 
 
 # Start the server.
