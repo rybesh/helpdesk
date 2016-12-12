@@ -32,7 +32,7 @@ This is a simple notekeeping application.
     "description": "http://schema.org/description",  
     "notebook": "https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#",  
     "references": "https://schema.org/collection"  
-    "reference": "https://schema.org/citation",
+    "reference": "https://schema.org/citation",  
     "time": "http://schema.org/dateCreated",  
     "title": "http://schema.org/name",  
     "url": "http://schema.org/URL"
