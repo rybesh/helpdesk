@@ -1,8 +1,8 @@
-This is an example of a simple web API implemented using
+This is a simple notekeeping application.
 [Flask](http://flask.pocoo.org/) and
 [Flask-RESTful](http://flask-restful.readthedocs.org/en/latest/).
 
-To run it:
+**To run the app:**
 
 1. Install required dependencies:
    ```
@@ -10,37 +10,31 @@ To run it:
    ``` 
    [Flask](http://flask.pocoo.org/docs/0.10/installation/#installation)
    and
-   [Flask-RESTful](http://flask-restful.readthedocs.org/en/latest/installation.html) to run `server.py` 
-   and [RDFLib](http://rdflib.readthedocs.org/en/latest/) and [JSONLD for RDFLib](https://github.com/RDFLib/rdflib-jsonld) to run the `extractdata.py` script or the `another-server.py` service.
+   [Flask-RESTful](http://flask-restful.readthedocs.org/en/latest/installation.html) to run `server.py`
 
-2. Run the helpdesk server:
+2. Run the notebook server:
    ```
-   $ python server.py
+   $ python notebook-server.py
    ```
-   Alternatively, you can access the service running here: http://aeshin.org:5555/requests
+   This service is not currently accessible online, so you must run it locally.
    
-3. Use the `extractdata.py` script to examine the triples found in various representations of the helpdesk resources.
-   
-   RDFa/microdata for the list of help requests:
-   ```
-   $ python extractdata.py http://aeshin.org:5555/requests
-   ```
-   JSON-LD for the list of help requests:
-   ```
-   $ python extractdata.py http://aeshin.org:5555/requests.json
-   ```
-   RDFa/microdata for an individual help request:
-   ```
-   $ python extractdata.py http://aeshin.org:5555/request/fhs6jo
-   ```
-   JSON-LD for an individual help request:
-   ```
-   $ python extractdata.py http://aeshin.org:5555/request/fhs6jo.json
-   ```
+3. View, post, and update notebooks and references in the notebook application.
 
-4. Run the contacts server for an example of a service calling another service:
-   ```
-   $ python another-server.py
-   ```
-   Alternatively, you can access the service running here: http://aeshin.org:5556/contacts.json
-   
+4. View JSON-LD data
+	
+	*In a browser, click the link to view JSON-LD for a given notebook or reference.
+	*View the data in the browser or use the JSON-LD Playground at http://json-ld.org/playground/
+		*To use the JSON-LD playground, copy and paste data from the browser to the playground.
+
+**JSON-LD data properties**
+	"@container": "@index",
+    "@id": "http://www.w3.org/2000/01/rdf-schema#member",
+	"comment": "http://schema.org/comment",
+    "creator": "http://schema.org/creator",
+    "description": "http://schema.org/description",
+    "notebook": "https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#",
+    "references": "https://schema.org/collection"
+	"reference": "https://schema.org/citation",
+    "time": "http://schema.org/dateCreated",
+    "title": "http://schema.org/name",
+    "url": "http://schema.org/URL"
