@@ -30,7 +30,7 @@ This is a simple notekeeping application.
     "comment": "http://schema.org/comment",  
     "creator": "http://schema.org/creator",  
     "description": "http://schema.org/description",  
-    "notebook": "https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#",  
+    "notebook": https://schema.org/collection,  
     "references": "https://schema.org/collection"  
     "reference": "https://schema.org/citation",  
     "time": "http://schema.org/dateCreated",  
