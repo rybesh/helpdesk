@@ -7,6 +7,7 @@
 <a href="{{ request.path }}.json">
 view data as JSON-LD</a>
 
+
 <h1 class="title" itemprop="name" property="name">{{ notebook.title }}</h1>  
 
 <p class="description" itemprop="description" property="description">{{ notebook.description }}</p>
@@ -21,8 +22,8 @@ view data as JSON-LD</a>
 
 <form class="notebook-editor" method="put">
 
-  <label>author
-    <input name="author" type="text" value="{{notebook.author}}">
+  <label>creator
+    <input name="creator" type="text" value="{{notebook.creator}}">
   </label>
   <br>
   <label>title
