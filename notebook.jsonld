@@ -9,8 +9,8 @@
     "creator": "http://schema.org/creator",
     "time": "http://schema.org/dateCreated",
     "comment": "http://schema.org/comment",
-	"references": "https://schema.org/collection"
-	"reference": "https://schema.org/citation"
+	"references": "https://schema.org/collection",
+	"reference": "https://schema.org/citation",
 	"url": "http://schema.org/URL"
   },
   "@id": "notebooks",
