@@ -1,9 +1,9 @@
 { "@context":
-  { "notebook": "https://schema.org/collection",
+  { "notebook": "http://purl.org/wf4ever/ro#ResearchObject",
     "notebooks":
     { "@id": "http://www.w3.org/2000/01/rdf-schema#member",
       "@container": "@index",
-	  "references": "https://schema.org/collection"
+	  "references": "http://purl.org/wf4ever/ro#ResearchObject"
     },
     "title": "http://schema.org/name",
     "description": "http://schema.org/description",
