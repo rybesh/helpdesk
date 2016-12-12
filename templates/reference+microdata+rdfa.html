@@ -9,14 +9,14 @@
 
   <h1 class="title" itemprop="name" property="name">Reference Title: {{ reference.title }}</h1>  
 
+
   <p class="comment" itemprop="comment" property="comment">Reference Comment: {{ reference.comment }}</p>
 
   <div>
-     <span>Reference URL: <a rel="link" href="{{reference.link}}">{{reference.link}}</a></span>
+     <span>Reference URL: <a rel="url" href="{{reference.link}}">{{reference.link}}</a></span>
   </div>
 
-	<h2>Update the Reference</h2>
-  
+	<h4>Update the Reference</h4>
   <form class="reference-editor" method="put">
 
     <label>Reference Title
@@ -40,7 +40,6 @@
     button.addEventListener('click', function (event) {
         event.preventDefault();
         var request = new XMLHttpRequest();
-        alert("doing put");
         request.open('PUT', window.location.pathname);
         request.onreadystatechange = function () {
             if (XMLHttpRequest.DONE === request.readyState

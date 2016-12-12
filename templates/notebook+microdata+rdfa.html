@@ -20,6 +20,22 @@ view data as JSON-LD</a>
 <time itemprop="dateCreated" property="dateCreated"
       datetime="{{ notebook.time }}">{{ notebook.time }}</time>
 
+<form class="reference-editor" action="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}" method="post">
+  <label>Reference Title
+    <input name="reference" type="text">
+  </label>
+  <br>
+  <label>Reference Link
+    <input name="link" type="text">
+  </label>
+  <br>
+  <label>Reference Comment
+    <textarea name="comment"></textarea>
+  </label>
+  <br>
+  <input class="create" type="submit" value="Add New Reference">
+</form>
+
 <form class="notebook-editor" method="put">
 
   <label>creator
@@ -43,7 +59,7 @@ view data as JSON-LD</a>
     </li>
   {% endfor %}
 
-  <button class="update" id="update-notebook-button" type="submit">Update</button>
+  <button class="update" id="update-notebook-button" type="submit">Update Notebook</button>
 </form>
 <script>
     var form = document.querySelector('.notebook-editor');
@@ -52,7 +68,6 @@ view data as JSON-LD</a>
     button.addEventListener('click', function (event) {
         event.preventDefault();
         var request = new XMLHttpRequest();
-        alert("doing put");
         request.open('PUT', window.location.pathname);
         request.onreadystatechange = function () {
             if (XMLHttpRequest.DONE === request.readyState
