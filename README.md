@@ -26,9 +26,7 @@ This is a simple notekeeping application.
 	*View the data in the browser or use the JSON-LD Playground at http://json-ld.org/playground/
 		*To use the JSON-LD playground, copy and paste data from the browser to the playground.
 
-**JSON-LD data properties**
-	"@container": "@index",
-    "@id": "http://www.w3.org/2000/01/rdf-schema#member",
+**JSON-LD data properties**  
 	"comment": "http://schema.org/comment",
     "creator": "http://schema.org/creator",
     "description": "http://schema.org/description",
