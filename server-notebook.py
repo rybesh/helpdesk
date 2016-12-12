@@ -48,6 +48,13 @@ for arg in ['creator', 'title', 'description']:
         arg, type=nonempty_string, required=True,
         help="'{}' is a required value".format(arg))
 
+new_reference_parser = reqparse.RequestParser()
+for arg in ['reference', 'link', 'comment']:
+    new_reference_parser.add_argument(
+        arg, type=nonempty_string, required=True,
+        help="'{}' is a required value".format(arg))
+
+print(new_reference_parser);
 
 # Specify the data necessary to update an existing notebook.
 # Only the priority and comments can be updated.
@@ -90,6 +97,25 @@ class Notebook(Resource):
         notebook['description'] = update['description']
         return make_response(
             render_notebook_as_html(notebook, notebook_id), 200)
+
+    def post(self, notebook_id):
+        error_if_notebook_not_found(notebook_id)
+        notebook = data['notebooks'][notebook_id]
+
+        if 'references' not in notebook:
+            notebook['references'] = {}
+
+        reference = new_reference_parser.parse_args()
+        print(reference)
+        if 'https://' not in reference['link']:
+            reference['link'] = 'https://'+reference['link']
+
+        reference_id = generate_id()
+        notebook['references'][reference_id] = reference
+        print(notebook['references'][reference_id])
+        return make_response(
+            render_notebook_as_html(notebook, notebook_id), 201)
+
 
 
 # Define a resource for getting a JSON representation of a help request.
@@ -134,9 +160,12 @@ class Reference(Resource):
 
         curr_reference = curr_notebook['references'][reference_id]
         update = update_reference_parser.parse_args()
+
+        if 'https://' not in update['link']:
+            update['link'] = 'https://'+update['link']
+
         curr_reference['reference'] = update['reference']
         curr_reference['link'] = update['link']
-        curr_reference['title'] = update['title']
         curr_reference['comment'] = update['comment']
         return make_response(
             render_reference_as_html(curr_reference, notebook_id), 200)
