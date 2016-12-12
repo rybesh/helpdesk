@@ -41,9 +41,9 @@ def error_if_reference_not_found(notebook, reference_id):
 
 
 # Specify the data necessary to create a new notebook request.
-# "author", "title", and "description" are all required values.
+# "creator", "title", and "description" are all required values.
 new_notebook_parser = reqparse.RequestParser()
-for arg in ['author', 'title', 'description']:
+for arg in ['creator', 'title', 'description']:
     new_notebook_parser.add_argument(
         arg, type=nonempty_string, required=True,
         help="'{}' is a required value".format(arg))
@@ -53,7 +53,7 @@ for arg in ['author', 'title', 'description']:
 # Only the priority and comments can be updated.
 update_notebook_parser = reqparse.RequestParser()
 update_notebook_parser.add_argument(
-    'author', type=str, default='')
+    'creator', type=str, default='')
 update_notebook_parser.add_argument(
     'title', type=str, default='')
 update_notebook_parser.add_argument(
@@ -85,7 +85,7 @@ class Notebook(Resource):
         error_if_notebook_not_found(notebook_id)
         notebook = data['notebooks'][notebook_id]
         update = update_notebook_parser.parse_args()
-        notebook['author'] = update['author']
+        notebook['creator'] = update['creator']
         notebook['title'] = update['title']
         notebook['description'] = update['description']
         return make_response(
@@ -109,6 +109,7 @@ class ReferenceAsJSON(Resource):
         curr_notebook = data['notebooks'][notebook_id]
         error_if_reference_not_found(curr_notebook, reference_id)
         curr_reference = curr_notebook['references'][reference_id]
+        curr_reference['@context'] = data['@context']
 
         return curr_reference
 
