@@ -1,5 +1,5 @@
 { "@context":
-  { "notebook": "https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#",
+  { "notebook": "https://schema.org/collection",
     "notebooks":
     { "@id": "http://www.w3.org/2000/01/rdf-schema#member",
       "@container": "@index",
