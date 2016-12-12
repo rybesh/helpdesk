@@ -73,6 +73,7 @@ update_reference_parser.add_argument(
     'link', type=str, default='')
 update_reference_parser.add_argument(
     'comment', type=str, default='')
+update_reference_parser.add_argument('title', type=str, default='')
 
 
 # Define our notebook resource.
@@ -163,7 +164,7 @@ class Reference(Resource):
 
         if 'https://' not in update['link']:
             update['link'] = 'https://'+update['link']
-
+        curr_reference['title'] = update['title']
         curr_reference['reference'] = update['reference']
         curr_reference['link'] = update['link']
         curr_reference['comment'] = update['comment']

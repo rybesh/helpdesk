@@ -7,7 +7,7 @@
 <a href="{{ request.path }}.json">
 view data as JSON-LD</a>
 
-
+<div>
 <h1 class="title" itemprop="name" property="name">{{ notebook.title }}</h1>  
 
 <p class="description" itemprop="description" property="description">{{ notebook.description }}</p>
@@ -19,7 +19,9 @@ view data as JSON-LD</a>
 
 <time itemprop="dateCreated" property="dateCreated"
       datetime="{{ notebook.time }}">{{ notebook.time }}</time>
-
+</div>
+<hr/>
+<div>
 <form class="reference-editor" action="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}" method="post">
   <label>Reference Title
     <input name="reference" type="text">
@@ -35,7 +37,9 @@ view data as JSON-LD</a>
   <br>
   <input class="create" type="submit" value="Add New Reference">
 </form>
-
+</div>
+<hr/>
+<div>
 <form class="notebook-editor" method="put">
 
   <label>creator
@@ -61,6 +65,7 @@ view data as JSON-LD</a>
 
   <button class="update" id="update-notebook-button" type="submit">Update Notebook</button>
 </form>
+</div>
 <script>
     var form = document.querySelector('.notebook-editor');
     var button = document.querySelector('#update-notebook-button');
