@@ -7,9 +7,10 @@
   <a href="{{ request.path }}.json">
   view data as JSON-LD</a>
 
-  <h1 class="title" itemprop="name" property="name">{{ reference.reference }}</h1>  
+  <h1 class="title" itemprop="name" property="name">Reference Title: {{ reference.title }}</h1>  
 
-  <p class="comment" itemprop="comment" property="comment">{{ reference.comment }}</p>
+
+  <p class="comment" itemprop="comment" property="comment">Reference Comment: {{ reference.comment }}</p>
 
   <div>
      <span>Reference URL: <a rel="url" href="{{reference.link}}">{{reference.link}}</a></span>
