@@ -136,6 +136,7 @@ class Reference(Resource):
         update = update_reference_parser.parse_args()
         curr_reference['reference'] = update['reference']
         curr_reference['link'] = update['link']
+        curr_reference['title'] = update['title']
         curr_reference['comment'] = update['comment']
         return make_response(
             render_reference_as_html(curr_reference, notebook_id), 200)

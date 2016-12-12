@@ -2,14 +2,14 @@
   { "notebook": "https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#",
     "notebooks":
     { "@id": "http://www.w3.org/2000/01/rdf-schema#member",
-      "@container": "@index"
+      "@container": "@index",
+	  "references": "https://schema.org/collection"
     },
     "title": "http://schema.org/name",
     "description": "http://schema.org/description",
     "creator": "http://schema.org/creator",
     "time": "http://schema.org/dateCreated",
     "comment": "http://schema.org/comment",
-	"references": "https://schema.org/collection",
 	"reference": "https://schema.org/citation",
 	"url": "http://schema.org/URL"
   },
@@ -24,7 +24,7 @@
       "time" : "2014-10-13T12:00:4",
       "references":
         { "abcd0j":
-            { "title" : "http://www.cnn.com",
+            { "title" : "A fascinating reference that you definitely want to read",
               "comment" : "this is a reference",
               "reference" : "Jones, A, Really Good Paper on JSON, Journal of Good Things, 1911",
               "link" : "http://cnn.com"

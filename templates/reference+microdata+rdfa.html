@@ -7,21 +7,23 @@
   <a href="{{ request.path }}.json">
   view data as JSON-LD</a>
 
-  <h1 class="title" itemprop="name" property="name">{{ reference.reference }}</h1>  
+  <h1 class="title" itemprop="name" property="name">{{ reference.title }}</h1>  
 
   <p class="comment" itemprop="comment" property="comment">{{ reference.comment }}</p>
 
   <div>
-     <span>Reference Source: <a rel="link" href="{{reference.link}}">{{reference.link}}</a></span>
+     <span>Reference URL: <a rel="link" href="{{reference.link}}">{{reference.link}}</a></span>
   </div>
 
+	<h2>Update the Reference</h2>
+  
   <form class="reference-editor" method="put">
 
     <label>Reference Title
       <input name="reference" type="text" value="{{reference.reference}}">
     </label>
     <br>
-    <label>Reference Link
+    <label>Reference URL
       <input name="link" type="text" value = {{reference.link}}>
     </label>
     <br>
