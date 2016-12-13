@@ -16,21 +16,12 @@
 
 <ol>
   {% for notebook_id, notebook in notebooks %}
-  <li itemscope
-      itemid="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
-      resource="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}"
-      vocab="http://schema.org/"
-      prefix="notebook: https://rawgit.com/sils-webinfo/notebook/master/vocab.ttl#"
-      property="notebook:notebooks"
-      typeof="notebook:Notebook">
-    <div itemprop="http://www.w3.org/ns/md#item"
-         itemscope itemtype="http://schema.org/CreativeWork/Notebook">
-    <time itemprop="dateCreated"
-          property="dateCreated"
-          datetime="{{ notebook.time }}">{{ notebook.time }}</time>
+  <li>
+    <div>
+    <time datetime="{{ notebook.time }}">{{ notebook.time }}</time>
 
     <a href="{{ url_for('notebook', notebook_id=notebook_id) }}">
-      <span itemprop="name" property="name">{{ notebook.title }}</span>
+      <span>{{ notebook.title }}</span>
     </a>
     </div>
   </li>

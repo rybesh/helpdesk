@@ -14,6 +14,7 @@ def is_html(representation):
 
 
 def is_json(representation):
+    print('asf')
     return representation.info().get(
         "content-type").startswith("application/json")
 
