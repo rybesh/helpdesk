@@ -4,7 +4,7 @@
 
 <body>
 
-  <a href="{{ request.path }}.json">
+  <a rel="alternate" href="{{ request.path }}.json">
   view data as JSON-LD</a>
 
   <h1 class="title" itemprop="name" property="name">Reference Title: {{ reference.title }}</h1>  
@@ -52,7 +52,7 @@
   </script>
  
   <br>
-  <a rel="resource" href="{{ url_for('notebook', notebook_id=notebook_id) }}">Return to Notebook</a>
+  <a rel="collection" href="{{ url_for('notebook', notebook_id=notebook_id) }}">Return to Notebook</a>
 
 
 </body>

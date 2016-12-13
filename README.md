@@ -39,4 +39,15 @@ This is a simple notekeeping application.
     "time": "http://schema.org/dateCreated",  
     "title": "http://schema.org/name",  
     "url": "http://schema.org/URL"
+	
+**Classes**  
+    notebook-editor: an element that changes or creates a notebook
+	update: an element that updates the current resource
+	search: an element that searchs through the present data
+		
+**Relationships**  
+	alternate: specifies an alternate verson of the resource (in our app, this will be represented in JSON-LD)  
+	item: an item in a collection  
+	collection: the parent collection of the present resource
+	url: the URL for a cited resource
 
