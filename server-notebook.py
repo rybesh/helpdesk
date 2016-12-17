@@ -188,7 +188,7 @@ class MasterNotebookList(Resource):
         notebook = new_notebook_parser.parse_args()
         notebook_id = generate_id()
         notebook['@id'] = 'request/' + notebook_id
-        notebook['@type'] = 'notebook:notebook'
+        notebook['@type'] = 'notebook'
         notebook['time'] = datetime.isoformat(datetime.now())
         data['notebooks'][notebook_id] = notebook
         return make_response(

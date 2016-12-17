@@ -17,7 +17,7 @@
   "@id": "notebooks",
   "notebooks":
   { "fhs6jo" :
-    { "@type": "notebook:notebook",
+    { "@type": "notebook",
       "@id": "notebook/fhs6jo",
       "title" : "Notebook title",
       "description" : "This is the first notebook",
