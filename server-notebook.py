@@ -107,7 +107,7 @@ class Notebook(Resource):
 
         reference = new_reference_parser.parse_args()
         print(reference)
-        if 'https://' not in reference['link']:
+        if not reference['link'].startswith('http'):
             reference['link'] = 'https://'+reference['link']
 
         reference_id = generate_id()
@@ -162,7 +162,7 @@ class Reference(Resource):
         curr_reference = curr_notebook['references'][reference_id]
         update = update_reference_parser.parse_args()
 
-        if 'https://' not in update['link']:
+        if not update['link'].startswith('http'):
             update['link'] = 'https://'+update['link']
         curr_reference['title'] = update['title']
         curr_reference['link'] = update['link']
