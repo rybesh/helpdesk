@@ -1,6 +1,6 @@
 <!doctype html>
 <link rel="alternate" type="application/json" href="{{ request.path }}.json">
-<title>{{ reference.reference }}</title>
+<title>{{ reference.title }}</title>
 
 <body>
 
@@ -20,7 +20,7 @@
   <form class="reference-editor" method="put">
 
     <label>Reference Title
-      <input name="reference" type="text" value="{{reference.reference}}">
+      <input name="title" type="text" value="{{reference.title}}">
     </label>
     <br>
     <label>Reference URL

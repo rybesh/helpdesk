@@ -24,7 +24,7 @@ view data as JSON-LD</a>
 <div>
 <form class="reference-editor" action="{{ url_for('notebook', notebook_id=notebook_id, _external=True) }}" method="post">
   <label>Reference Title
-    <input name="reference" type="text">
+    <input name="title" type="text">
   </label>
   <br>
   <label>Reference Link
@@ -57,7 +57,7 @@ view data as JSON-LD</a>
     <li>
       <div>
         <a rel="item" href="{{ url_for('reference', notebook_id=notebook_id, reference_id=reference_id) }}">
-          <span itemprop="name" property="name" >{{notebook.references[reference_id].reference}}</span>
+          <span itemprop="name" property="name" >{{notebook.references[reference_id].title}}</span>
         </a>
       </div>
     </li>

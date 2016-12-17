@@ -12,7 +12,6 @@
     "description": "http://schema.org/description",
     "creator": "http://schema.org/creator",
     "time": "http://schema.org/dateCreated",
-	"reference": "https://schema.org/citation",
 	"url": "http://schema.org/URL"
   },
   "@id": "notebooks",
@@ -27,7 +26,7 @@
       "references":
         { "abcd0j":
             { "title" : "A fascinating reference that you definitely want to read",
-              "reference" : "Jones, A, Really Good Paper on JSON, Journal of Good Things, 1911",
+              "title" : "Jones, A, Really Good Paper on JSON, Journal of Good Things, 1911",
               "link" : "http://cnn.com"
             }
         }

@@ -68,11 +68,10 @@ update_notebook_parser.add_argument(
 
 update_reference_parser = reqparse.RequestParser()
 update_reference_parser.add_argument(
-    'reference', type=str, default='')
+    'title', type=str, default='')
 update_reference_parser.add_argument(
     'link', type=str, default='')
 update_reference_parser.add_argument(
-update_reference_parser.add_argument('title', type=str, default='')
     'description', type=str, default='')
 
 
@@ -165,7 +164,6 @@ class Reference(Resource):
         if 'https://' not in update['link']:
             update['link'] = 'https://'+update['link']
         curr_reference['title'] = update['title']
-        curr_reference['reference'] = update['reference']
         curr_reference['link'] = update['link']
         curr_reference['description'] = update['description']
         return make_response(
