@@ -25,7 +25,8 @@
       "time" : "2014-10-13T12:00:4",
       "references":
         { "abcd0j":
-            { "title" : "A fascinating reference that you definitely want to read",
+            { "@id": "notebook/fhs6jo/reference/abcd0j",
+              "description" : "A fascinating reference that you definitely want to read",
               "title" : "Jones, A, Really Good Paper on JSON, Journal of Good Things, 1911",
               "link" : "http://cnn.com"
             }

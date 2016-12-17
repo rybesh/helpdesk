@@ -111,6 +111,7 @@ class Notebook(Resource):
             reference['link'] = 'https://'+reference['link']
 
         reference_id = generate_id()
+        reference['@id'] = 'notebook/'+notebook_id+'/reference/'+reference_id
         notebook['references'][reference_id] = reference
         print(notebook['references'][reference_id])
         return make_response(
@@ -187,7 +188,7 @@ class MasterNotebookList(Resource):
     def post(self):
         notebook = new_notebook_parser.parse_args()
         notebook_id = generate_id()
-        notebook['@id'] = 'request/' + notebook_id
+        notebook['@id'] = 'notebook/' + notebook_id
         notebook['@type'] = 'notebook'
         notebook['time'] = datetime.isoformat(datetime.now())
         data['notebooks'][notebook_id] = notebook
