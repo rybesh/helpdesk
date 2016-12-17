@@ -49,7 +49,7 @@ for arg in ['creator', 'title', 'description']:
         help="'{}' is a required value".format(arg))
 
 new_reference_parser = reqparse.RequestParser()
-for arg in ['reference', 'link', 'comment']:
+for arg in ['title', 'link', 'description']:
     new_reference_parser.add_argument(
         arg, type=nonempty_string, required=True,
         help="'{}' is a required value".format(arg))
@@ -72,8 +72,8 @@ update_reference_parser.add_argument(
 update_reference_parser.add_argument(
     'link', type=str, default='')
 update_reference_parser.add_argument(
-    'comment', type=str, default='')
 update_reference_parser.add_argument('title', type=str, default='')
+    'description', type=str, default='')
 
 
 # Define our notebook resource.
@@ -167,7 +167,7 @@ class Reference(Resource):
         curr_reference['title'] = update['title']
         curr_reference['reference'] = update['reference']
         curr_reference['link'] = update['link']
-        curr_reference['comment'] = update['comment']
+        curr_reference['description'] = update['description']
         return make_response(
             render_reference_as_html(curr_reference, notebook_id), 200)
 

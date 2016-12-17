@@ -10,7 +10,7 @@
   <h1 class="title" itemprop="name" property="name">Reference Title: {{ reference.title }}</h1>  
 
 
-  <p class="comment" itemprop="comment" property="comment">Reference Comment: {{ reference.comment }}</p>
+  <p class="description" itemprop="description" property="description">Reference Description: {{ reference.description }}</p>
 
   <div>
      <span>Reference URL: <a rel="url" href="{{reference.link}}">{{reference.link}}</a></span>
@@ -27,7 +27,7 @@
       <input name="link" type="text" value = {{reference.link}}>
     </label>
     <br>
-    <textarea name="comment">{{reference.comment}}</textarea>
+    <textarea name="description">{{reference.description}}</textarea>
     <br>
 
     <button class="update" id="update-reference-button" type="submit">Update</button>
