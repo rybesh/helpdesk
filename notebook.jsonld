@@ -12,7 +12,7 @@
     "description": "http://schema.org/description",
     "creator": "http://schema.org/creator",
     "time": "http://schema.org/dateCreated",
-	"url": "http://schema.org/URL"
+    "link": "http://schema.org/url"
   },
   "@id": "notebooks",
   "notebooks":
